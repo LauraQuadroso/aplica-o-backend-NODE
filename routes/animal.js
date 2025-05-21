@@ -40,7 +40,7 @@ router.get('/', (req, res) => {
 // GET /animais/:id (Busca um animal específico pelo ID)
 router.get('/:id', (req, res) => {
   const { id } = req.params // Pega o ID da URL
-  const sql = 'SELECT * FROM animais WHERE id = ?' // Consulta SQL para buscar por ID
+  const sql = 'SELECT * FROM animais WHERE id = ?' 
 
   db.query(sql, [id], (err, results) => {
     if (err) {
@@ -52,7 +52,7 @@ router.get('/:id', (req, res) => {
       return res.status(404).json({ message: 'Animal não encontrado' })
     }
 
-    res.status(200).json(results[0]) // Retorna o primeiro (e único) resultado
+    res.status(200).json(results[0]) 
   })
 })
 
