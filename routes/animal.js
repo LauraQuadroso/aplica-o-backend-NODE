@@ -23,8 +23,7 @@ router.post('/', (req, res) => {
   })
 })
 
-// GET /animais
-
+// GET /animais (Lista todos os animais)
 router.get('/', (req, res) => {
   const sql = 'SELECT * FROM animais'
 
@@ -38,5 +37,23 @@ router.get('/', (req, res) => {
   })
 })
 
+// GET /animais/:id (Busca um animal específico pelo ID)
+router.get('/:id', (req, res) => {
+  const { id } = req.params // Pega o ID da URL
+  const sql = 'SELECT * FROM animais WHERE id = ?' // Consulta SQL para buscar por ID
+
+  db.query(sql, [id], (err, results) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).json({ message: 'Erro ao buscar animal por ID' })
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'Animal não encontrado' })
+    }
+
+    res.status(200).json(results[0]) // Retorna o primeiro (e único) resultado
+  })
+})
 
 module.exports = router
